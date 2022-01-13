@@ -66,6 +66,16 @@ void display_grid(int **grid, grid_size *gs)
   }
 }
 
+void display_visited(bool **visited, grid_size *gs)
+{
+  for (size_t i = 0; i < gs->rows; i++) {
+    for (size_t j = 0; j < gs->rows; j++) {
+      fprintf(stdout, "%d ", visited[i][j]);
+    }
+    fprintf(stdout, "\n");
+  }
+}
+
 int main(int argc, char **argv)
 {
   if (argc < 2) {
@@ -131,13 +141,13 @@ int main(int argc, char **argv)
         new_j = j + 1;
       }
     }
-    fprintf(stdout, "OOOO %ld %ld\n", new_i, new_j);
     visited[new_i][new_j] = true;
     path_weight += grid[new_i][new_j];
-    fprintf(stdout, "%d - (%ld, %ld)\n", grid[new_i][new_j], new_i, new_j);
     i = new_i;
     j = new_j;
   }
+
+  display_visited(visited, gs);
 
   for (size_t i = 0; i < gs->rows; i++) {
     free(visited[i]);
